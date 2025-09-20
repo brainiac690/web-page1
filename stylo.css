@@ -3,11 +3,11 @@
 
 /* Color Palette */
 :root {
-  --primary: #B22222;       /* Firebrick Red */
-  --accent: #FFD700;        /* Gold */
-  --background: #0A0A0A;    /* Deep Black */
-  --text: #F0F0F0;          /* Off-White */
-  --muted: #888888;         /* Muted Gray */
+  --primary: #B22222;
+  --accent: #FFD700;
+  --background: #0A0A0A;
+  --text: #F0F0F0;
+  --muted: #888888;
 }
 
 /* Reset */
@@ -33,6 +33,12 @@ img {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 /* Layout */
@@ -93,6 +99,12 @@ header {
 .nav-link:hover {
   background: var(--primary);
   color: var(--accent);
+}
+
+/* Hide mobile buttons by default */
+#menu-open-button,
+#menu-close-button {
+  display: none;
 }
 
 /* Hero */
@@ -309,43 +321,37 @@ header {
   font-size: 0.9rem;
 }
 
-/* Responsive */
-@media screen and (max-width: 900px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-menu {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .hero-section .section-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-image-wrapper {
-    max-width: 300px;
-    margin: auto;
-  }
-
-  .about-section {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .about-image {
-    margin: auto;
-  }
+/* Backdrop Blur */
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+  display: none;
 }
+
+body.show-mobile-menu .menu-backdrop {
+  display: block;
+}
+
+/* Responsive Menu */
 @media screen and (max-width: 900px) {
-  /* Navbar toggle buttons (if used) */
-  #menu-open-button,
+  #menu-open-button {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--text);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
   #menu-close-button {
     display: block;
+    position: absolute;
+    top: 30px;
+    right: 30px;
     font-size: 1.5rem;
     color: var(--text);
     background: none;
@@ -356,13 +362,14 @@ header {
   .nav-menu {
     position: fixed;
     top: 0;
-    left: -100%;
-    width: 100%;
+    left: -300px;
+    width: 280px;
     height: 100vh;
     background: var(--background);
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 100px;
     transition: left 0.3s ease;
     z-index: 999;
   }
@@ -371,61 +378,46 @@ header {
     left: 0;
   }
 
-  .nav-link {
+  .nav-menu .nav-link {
     font-size: 1.2rem;
     margin: 20px 0;
+    color: var(--text);
+    transition: 0.3s ease;
   }
 
-  /* Hero section layout */
-  .hero-section .section-content {
-    flex-direction: column-reverse;
-    text-align: center;
-    padding: 40px 20px;
+  .nav-menu .nav-link:hover {
+    color: var(--accent);
+    background: var(--primary);
+    padding: 10px 20px;
+    border-radius: 30px;
   }
 
-  .hero-image-wrapper {
-    max-width: 280px;
-    margin: 0 auto 40px;
-  }
-
-  .hero-details .title {
-    font-size: 3rem;
-  }
-
-  .hero-details .subtitle {
-    font-size: 1.3rem;
-  }
-
-  .hero-details .description {
-    font-size: 1rem;
-  }
-
-  .buttons {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* About section */
-  .about-section {
+  .hero-section .section-content,
+  .about-section,
+  .booking-section,
+  .gallery-section,
+  .artists-section {
     flex-direction: column;
     text-align: center;
   }
 
-  .about-image {
-    margin-bottom: 40px;
+  .hero-image-wrapper,
+  .about-image-wrapper {
+    margin: 0 auto 40px;
   }
 
-  /* Booking form */
+  .buttons {
+    justify-content: center;
+  }
+
   .booking-form {
     padding: 30px 20px;
   }
 
-  /* Gallery grid */
   .gallery-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Artist cards */
   .artist-cards {
     flex-direction: column;
     align-items: center;
@@ -435,7 +427,6 @@ header {
     max-width: 90%;
   }
 
-  /* Footer */
   .site-footer {
     font-size: 0.8rem;
     padding: 30px 20px;
